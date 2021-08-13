@@ -1,0 +1,7 @@
+commands:
+  - name: "test"
+    desc: "Deneme komutu"
+    allies:
+      - "deneme"
+    messages:
+      - "sa"
