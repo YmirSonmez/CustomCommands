@@ -1,3 +1,10 @@
+#name -> String
+#perm -> String
+#desc -> String
+#allies -> String List
+#messages -> String List
+#formContent -> String List
+#kill -> Boolean
 commands:
   - name: "test"
     desc: "Deneme komutu"
