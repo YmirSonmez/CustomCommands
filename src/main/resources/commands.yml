@@ -12,3 +12,4 @@ commands:
       - "deneme"
     messages:
       - "sa"
+      - "bu bir test mesajıdır!"

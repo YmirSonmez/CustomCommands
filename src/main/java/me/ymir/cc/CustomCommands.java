@@ -6,6 +6,8 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
+import cn.nukkit.event.entity.EntityDamageEvent;
+import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.ConfigSection;
@@ -66,7 +68,15 @@ public class CustomCommands extends PluginBase{
             }
             if((boolean) cm[6]){
                 if(sender.isPlayer()){
-                    ((Player) sender).kill();
+                    Player player = (Player) sender;
+                    EntityDamageEvent ev = new EntityDamageEvent(player, EntityDamageEvent.DamageCause.SUICIDE, 1000);
+                    sender.getServer().getPluginManager().callEvent(ev);
+                    if (ev.isCancelled()) {
+                        return true;
+                    }
+                    player.setLastDamageCause(ev);
+                    player.setHealth(0);
+                    Command.broadcastCommandMessage(sender, new TranslationContainer("commands.kill.successful", player.getName()));
                 }
             }
         }
