@@ -1,5 +1,6 @@
 package me.ymir.cc;
 
+import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
@@ -35,10 +36,10 @@ public class CustomCommands extends PluginBase{
             args[0] = cmd.getString("name").toLowerCase();
             args[1] = cmd.getString("perm","");
             args[2] = cmd.getString("desc","Server Command");
-            args[3] = cmd.getStringList("allies");
-            args[4] = cmd.getStringList("messages");
-            args[5] = cmd.getStringList("formContent");
-            args[6] = cmd.get("particle");
+            args[3] = cmd.containsKey("allies") ? cmd.getStringList("allies") : null;
+            args[4] = cmd.containsKey("messages") ? cmd.getStringList("messages") : null;
+            args[5] = cmd.containsKey("formContent") ? cmd.getStringList("formContent") : null;
+            args[6] = cmd.getBoolean("kill",false);
             commands.put((String) args[0],args);
             PluginCommand command = new PluginCommand((String) args[0],this);
             command.setDescription("Server Command");
@@ -61,6 +62,11 @@ public class CustomCommands extends PluginBase{
             if(cm[4] != null){
                 for(String msg : (List<String>) cm[4]){
                     sender.sendMessage(msg);
+                }
+            }
+            if((boolean) cm[6]){
+                if(sender.isPlayer()){
+                    ((Player) sender).kill();
                 }
             }
         }
